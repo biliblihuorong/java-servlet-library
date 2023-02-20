@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./js/jquery3.3.1.min.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <button id="select">查询</button>
+      <div id="adddata">
+        <label for="">书名：</label><input type="text" id="bookName"/>
+        <label for="">作者：</label
+        ><input type="text" id="author"/> <label for="">价格：</label
+        ><input type="text" id="price"/><label for="">出版日期：</label
+        ><input type="text" id="publicationDate"/>
+        <button id="add">添加</button>
+      </div>
+    </div>
+    <div id="updateData" style="display: none">修改成功</div>
+    <table width="70%">
+      <thead>
+        <tr>
+          <td>书名</td>
+          <td>作者</td>
+          <td>价格</td>
+          <td>出版日期</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody id="tbd"></tbody>
+    </table>
+  </body>
+  <script>
+    var url = "http://localhost:8080";
+    $("#select").click(function () {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/library_war_exploded/selectBook",
+        data: "",
+        dataType: "json",
+        success: function (res) {
+          addDom(res);
+        },
+      });
+    });
+    $("#add").click(function () {
+      let book = [{}];
+      book[0].bookID = 0;
+      book[0].bookName = $("#adddata #bookName").val();
+      book[0].price = $("#adddata #price").val();
+      book[0].author = $("#adddata #author").val();
+      book[0].publicationDate = $("#adddata #publicationDate").val();
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/library_war_exploded/addBook",
+        data: JSON.stringify(book),
+        dataType: "json",
+        success: function (res) {
+          let book = [];
+          book.push(res);
+          addDom(book);
+        },
+      });
+    });
+    $("#tbd").on("click", ".delete", function (e) {
+      let book = [{}];
+      book[0].bookID = $(e.target).parent().attr("bookid")
+      book[0].bookName = $(e.target).parent().parent().find("input.bookName").val()
+      book[0].author = $(e.target).parent().parent().find("input.author").val()
+      book[0].price = $(e.target).parent().parent().find("input.price").val()
+      book[0].publicationDate = $(e.target).parent().parent().find("input.publicationDate").val()
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/library_war_exploded/delBook",
+        data: JSON.stringify(book),
+        dataType: "json",
+        success: function (res) {
+          $(e.target).parent().parent().remove();
+        },
+      });
+    });
+    $("#tbd").on("click", ".update", function (e) {
+      let book = [{}];
+      book[0].bookID = $(e.target).parent().attr("bookid")
+      book[0].bookName = $(e.target).parent().parent().find("input.bookName").val()
+      book[0].author = $(e.target).parent().parent().find("input.author").val()
+      book[0].price = $(e.target).parent().parent().find("input.price").val()
+      book[0].publicationDate = $(e.target).parent().parent().find("input.publicationDate").val()
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/library_war_exploded/updateBook",
+        data: JSON.stringify(book),
+        dataType: "json",
+        success: function (res) {
+          $("#updateData").show();
+          setTimeout(function (){
+            $("#updateData").hide();
+          },2000)
+        },
+      });
+    });
+    function addDom(data) {
+      let tr = "";
+      for (let i = 0; i < data.length; i++) {
+        let rs = data[i];
+        tr += `<tr>
+                        <td><input type="text" class="bookName" value="${rs.bookName}"></input></td>
+                        <td><input type="text" class="author" value="${rs.author}"></input></td>
+                        <td><input type="text" class="price" value="${rs.price}"></input></td>
+                        <td><input type="text" class="publicationDate" value="${rs.publicationDate}"></input></td>
+                        <td id="set" bookid="${rs.bookID}"><button class="delete">删除</button><button class="update">修改</button></td>
+                      </tr>`;
+      }
+      $("#tbd").append(tr);
+    }
+  </script>
+</html>

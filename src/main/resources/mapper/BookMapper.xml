@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper⽂件相当于DAO接⼝的‘实现类’，namespace属性要指定`实现`DAO接⼝的全限定名-->
+<mapper namespace="cn.edu.czimt.DAO.BookDAO">
+    <resultMap id="BookMap" type="cn.edu.czimt.pojo.Book">
+        <id column="BookID" property="bookID"/>
+        <result column="BookName" property="bookName"/>
+        <result column="Author" property="author"/>
+        <result column="Price" property="price"/>
+        <result column="PublicationDate" property="publicationDate"/>
+    </resultMap>
+
+    <insert id="addBook" useGeneratedKeys="true" keyProperty="bookID">
+        insert into library(BookName,Author,Price,PublicationDate) VALUES (#{bookName},#{author},#{price},#{publicationDate})
+    </insert>
+    <select id="selectBook" resultMap="BookMap">
+        SELECT * from library
+    </select>
+
+    <delete id="delBook"  >
+        delete from library where Bookid=#{bookID}
+    </delete>
+
+    <update id="upDataBook" >
+        update library set BookName=#{book.bookName},Author=#{book.author},Price=#{book.price},PublicationDate=#{book.publicationDate} where BookID=#{bookID}
+    </update>
+</mapper>

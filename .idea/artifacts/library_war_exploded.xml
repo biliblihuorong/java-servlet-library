@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="library:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/library_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="library" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.5" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter:5.8.1" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.1" />
+          <element id="library" level="project" name="Maven: org.opentest4j:opentest4j:1.2.0" />
+          <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.8.1" />
+          <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.1.2" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-params:5.8.1" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.1" />
+          <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-engine:1.8.1" />
+          <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:5.3.2" />
+          <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:4.5" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.47" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="library/web/Web" />
+    </root>
+  </artifact>
+</component>
